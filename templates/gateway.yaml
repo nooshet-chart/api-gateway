@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: {{ include "api-gateway.fullname" . }}-gateway
+spec:
+  selector:
+    {{- toYaml .Values.istio.gateway.selector | nindent 4 }}
+  servers:
+    - port:
+        number: {{ .Values.istio.gateway.port }}
+        name: http
+        protocol: HTTP
+      hosts:
+        - {{ .Values.istio.gateway.host }}
+
