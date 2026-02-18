@@ -3,6 +3,8 @@ kind: VirtualService
 metadata:
   name: {{ include "api-gateway.fullname" . }}-virtual
 spec:
+  gateways:
+    - {{ include "api-gateway.fullname" . }}-gateway
   hosts:
     {{- range .Values.istio.virtualService.hosts }}
     - {{ . | quote }}
@@ -12,7 +14,13 @@ spec:
     - match:
         {{- range .match }}
         - uri:
+            {{- if .uri.prefix }}
             prefix: {{ .uri.prefix }}
+            {{- else if .uri.exact }}
+            exact: {{ .uri.exact }}
+            {{- else if .uri.regex }}
+            regex: {{ .uri.regex }}
+            {{- end }}
         {{- end }}
       {{- if .rewrite }}
       rewrite:
