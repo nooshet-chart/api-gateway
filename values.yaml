@@ -1,21 +1,26 @@
 # Default values for the API Gateway Helm chart
 
 replicaCount: 1
+
 image:
   repository: ghcr.io/nooshet-backend/api-gateway
-  tag: development-006a41b
+  tag: latest
   pullPolicy: IfNotPresent
-  imagePullSecrets: []
+  imagePullSecrets:
+    - name: ghcr-secret
+
 service:
   type: ClusterIP
   port: 80
   targetPort: 8080
+
 hpa:
   enabled: false
   minReplicas: "1"
   maxReplicas: "3"
   cpuUtilization: "90"
   memoryUtilization: "450Mi"
+
 resources:
   limits:
     memory: 512Mi
@@ -23,6 +28,7 @@ resources:
   requests:
     cpu: 250m
     memory: 256Mi
+
 env:
   JWT_SECRET: "change-me-in-prod"
   JWT_ISSUER: "nooshet"
@@ -33,6 +39,7 @@ env:
   IDENTITY_SERVICE_URL: "http://identity-service:8080"
   USER_SERVICE_URL: "http://user-service:8080"
   JAVA_OPTS: "-XX:TieredStopAtLevel=1 -Xss256k -Xmx448m"
+
 istio:
   enabled: true
   pathPrefix: ""
@@ -112,6 +119,7 @@ istio:
               host: api-gateway
               port:
                 number: 80
+
 destinationRule:
   connectionPool:
     http:
