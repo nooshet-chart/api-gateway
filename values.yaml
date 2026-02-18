@@ -3,7 +3,7 @@
 replicaCount: 1
 image:
   repository: ghcr.io/nooshet-backend/api-gateway
-  tag: development-7a90912
+  tag: development-ca058e0
   pullPolicy: IfNotPresent
   imagePullSecrets:
     - name: ghcr-secret
@@ -127,14 +127,13 @@ destinationRule:
     interval: 30s
     baseEjectionTime: 30s
     maxEjectionPercent: 50
-
 ingress:
   enabled: true
   className: "traefik"
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
   hosts:
-    - host: 
+    - host:
       paths:
         - path: /
           pathType: Prefix
