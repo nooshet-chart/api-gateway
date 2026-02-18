@@ -3,13 +3,14 @@ kind: Gateway
 metadata:
   name: {{ include "api-gateway.fullname" . }}-gateway
 spec:
+  {{- if .Values.istio.gateway.selector }}
   selector:
     {{- toYaml .Values.istio.gateway.selector | nindent 4 }}
+  {{- end }}
   servers:
     - port:
         number: {{ .Values.istio.gateway.port }}
         name: http
         protocol: HTTP
       hosts:
-        - {{ .Values.istio.gateway.host }}
-
+        - "{{ .Values.istio.gateway.host }}"
