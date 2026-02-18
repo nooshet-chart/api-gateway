@@ -5,7 +5,7 @@ metadata:
 spec:
   hosts:
     {{- range .Values.istio.virtualService.hosts }}
-    - {{ . }}
+    - {{ . | quote }}
     {{- end }}
   http:
     {{- range .Values.istio.virtualService.http }}
