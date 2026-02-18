@@ -120,10 +120,21 @@ destinationRule:
       http2MaxRequests: 1000
     tcp:
       maxConnections: 100
-  loadBalancer:
+  loader:
     simple: ROUND_ROBIN
   outlierDetection:
     consecutive5xxErrors: 5
     interval: 30s
     baseEjectionTime: 30s
     maxEjectionPercent: 50
+
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+  hosts:
+    - host: 
+      paths:
+        - path: /
+          pathType: Prefix
