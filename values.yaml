@@ -130,7 +130,7 @@ destinationRule:
     baseEjectionTime: 30s
     maxEjectionPercent: 50
 ingress:
-  enabled: true
+  enabled: false
   className: "traefik"
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web
