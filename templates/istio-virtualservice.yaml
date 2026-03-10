@@ -26,6 +26,10 @@ spec:
       rewrite:
         uri: {{ .rewrite.uri }}
       {{- end }}
+      {{- if $.Values.istio.virtualService.corsPolicy }}
+      corsPolicy:
+        {{- toYaml $.Values.istio.virtualService.corsPolicy | nindent 8 }}
+      {{- end }}
       route:
         {{- range .route }}
         - destination:
@@ -34,3 +38,4 @@ spec:
               number: {{ .destination.port.number }}
         {{- end }}
     {{- end }}
+
